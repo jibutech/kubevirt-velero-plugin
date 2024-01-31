@@ -24,7 +24,6 @@ import (
 
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
-
 	"k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
@@ -115,6 +114,9 @@ func (p *DVBackupItemAction) handlePVC(item runtime.Unstructured) (runtime.Unstr
 			annotations[AnnInProgress] = dv.Name
 		}
 		metadata.SetAnnotations(annotations)
+
+		unstructured.RemoveNestedField(item.UnstructuredContent(), "spec", "dataSource")
+		unstructured.RemoveNestedField(item.UnstructuredContent(), "spec", "dataSourceRef")
 	}
 
 	extra := []velero.ResourceIdentifier{}
