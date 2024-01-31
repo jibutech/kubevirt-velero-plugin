@@ -1,0 +1,27 @@
+# The binary to build (just the basename).
+BIN ?= velero-plugin-for-kubevirt
+
+# Where to push the docker image.
+REGISTRY ?= docker.io
+
+IMAGE_TAG:=$(shell ./hack/image-tag)
+LDFLAGS="-extldflags '-static' $(shell ./hack/version.sh)"
+GOPROXY ?= https://goproxy.cn,direct
+TAG ?= ${IMAGE_TAG}
+
+# Image name
+IMAGE_PREFIX ?= $(REGISTRY)/ys1000
+IMAGE?= $(IMAGE_PREFIX)/$(BIN):$(TAG)
+
+PLATFORM ?= linux/amd64
+
+.PHONY: container
+container:
+	docker buildx build --platform ${PLATFORM} \
+    -t ${IMAGE} \
+	--build-arg=GOPROXY=$(GOPROXY) \
+	--build-arg=BIN=$(BIN) \
+	--build-arg=REGISTRY=$(REGISTRY) \
+	--build-arg=LDFLAGS=${LDFLAGS} \
+	-f velero-plugin.Dockerfile \
+    --push .
