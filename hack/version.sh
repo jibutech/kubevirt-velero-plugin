@@ -73,7 +73,7 @@ get_ldflags() {
   function add_ldflag() {
     local key=${1}
     local val=${2}
-    ldflags+=("-X 'github.com/jibudata/velero-plugin-for-jinke/version.${key}=${val}'")
+    ldflags+=("-X 'github.com/jibudata/velero-plugin-for-kubevirt/version.${key}=${val}'")
   }
 
   add_ldflag "buildDate" "$(date -u +'%Y-%m-%dT%H:%M:%SZ')"

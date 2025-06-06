@@ -2,7 +2,7 @@
 BIN ?= velero-plugin-for-kubevirt
 
 # Where to push the docker image.
-REGISTRY ?= docker.io
+REGISTRY ?= jibutech-registry.cn-hangzhou.cr.aliyuncs.com
 
 IMAGE_TAG:=$(shell ./hack/image-tag)
 LDFLAGS="-extldflags '-static' $(shell ./hack/version.sh)"

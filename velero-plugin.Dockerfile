@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM golang:1.21-bookworm AS build
+FROM --platform=$BUILDPLATFORM jibutech-registry.cn-hangzhou.cr.aliyuncs.com/jibu-dev/golang:1.23.6-bullseye AS build
 
 ARG TARGETOS
 ARG TARGETARCH
