@@ -352,6 +352,13 @@ func IsMetadataBackup(backup *velerov1.Backup) bool {
 }
 
 func ShouldClearMacAddress(restore *velerov1.Restore) bool {
+	for _, ns := range restore.Spec.IncludedNamespaces {
+		newNamespace, ok := restore.Spec.NamespaceMapping[ns]
+		if ok && newNamespace != ns {
+			return true
+		}
+	}
+
 	return metav1.HasLabel(restore.ObjectMeta, ClearMacAddressLabel)
 }
 
